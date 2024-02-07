@@ -134,7 +134,7 @@ class checkOutActivity : AppCompatActivity() {
                 // Update checkout_time and checkout_location for today's date and username
                 db.collection("attendance")
                     .whereEqualTo("Date", currentDate)
-                    .whereEqualTo("Employee Name", username)
+                    .whereEqualTo("Employee Name", username).whereEqualTo("Check-out Time", "")
                     .get()
                     .addOnSuccessListener { querySnapshot ->
                         for (document in querySnapshot.documents) {
