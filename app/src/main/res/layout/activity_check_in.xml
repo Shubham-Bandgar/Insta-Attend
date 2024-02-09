@@ -4,31 +4,128 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bck2"
+    android:background="@drawable/top_background_color"
     tools:context=".checkInActivity">
 
-    <TextView
-        android:id="@+id/currentTimeTextView"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Current Time"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.381"
-        tools:ignore="TextSizeCheck" />
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="264dp"
+        app:layout_constraintGuide_percent=".25" />
 
-    <Button
-        android:id="@+id/authButton"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/backtohome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Check-In"
+        android:clickable="true"
+        android:contentDescription="Back to Home Button"
+        android:textAlignment="center"
+        app:backgroundTint="#DCF6EFF1"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.078"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.2"
+        app:srcCompat="@drawable/baseline_arrow_back_ios_24"
+        app:tint="@color/app_theme" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="516dp"
+        android:layout_height="433dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.609"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.532"
+        app:srcCompat="@drawable/blur" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="88dp"
+        android:layout_height="78dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.98"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.152"
+        app:srcCompat="@drawable/logotry" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardView"
+        style="@style/custom_card_view_style"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.553" />
+        app:layout_constraintTop_toTopOf="@+id/guideline4"
+        app:layout_constraintVertical_bias="0.0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/authButton"
+                android:layout_width="205dp"
+                android:layout_height="57dp"
+                android:backgroundTint="@color/app_theme"
+                android:drawableLeft="@drawable/baseline_login_24"
+                android:drawableTint="@color/app_theme_light"
+                android:text="CheckIn"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.502"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.731" />
+
+            <TextView
+                android:id="@+id/currentTimeTextView"
+                android:layout_width="356dp"
+                android:layout_height="41dp"
+                android:drawablePadding="5dp"
+                android:drawableTint="@color/app_theme"
+                android:padding="8dp"
+                android:shadowColor="#FFEB3B"
+                android:text="Current Time:"
+                android:textAlignment="viewStart"
+                android:textColor="@color/app_theme"
+                android:textSize="20sp"
+                app:drawableLeftCompat="@drawable/baseline_access_time_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.512"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.301" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="291dp"
+                android:layout_height="63dp"
+                android:text="You are about to CheckIn"
+                android:textAlignment="center"
+                android:textColor="#E10934"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.505"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.55" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

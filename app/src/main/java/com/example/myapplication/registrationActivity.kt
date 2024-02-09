@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -25,6 +26,12 @@ class registrationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)
+        val txtButton = findViewById<TextView>(R.id.textView3)
+
+        txtButton.setOnClickListener{
+            val intent = Intent(this, loginActivity::class.java)
+            startActivity(intent)
+        }
 
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
@@ -54,8 +61,6 @@ class registrationActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         val user = auth.currentUser
                         val uid = user?.uid
-
-                        // Creating COllection of employeeDetails
                         val employeeDetails = hashMapOf(
                             "username" to username,
                             "email" to email,
@@ -111,7 +116,7 @@ class registrationActivity : AppCompatActivity() {
         }
 
         val prompt = BiometricPromptCompat.Builder(this).apply {
-            this.setTitle("Use your uniqueness to register in App")
+            this.setTitle("Register your biometric")
         }
 
         prompt.build().authenticate(object : BiometricPromptCompat.AuthenticationCallback() {

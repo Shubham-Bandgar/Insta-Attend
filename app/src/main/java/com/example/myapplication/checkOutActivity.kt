@@ -5,6 +5,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Address
+import android.location.Geocoder
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
@@ -27,11 +29,13 @@ import dev.skomlach.biometric.compat.BiometricManagerCompat
 import dev.skomlach.biometric.compat.BiometricPromptCompat
 import dev.skomlach.biometric.compat.BiometricType
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
 
 class checkOutActivity : AppCompatActivity() {
-
     private lateinit var locationClient: FusedLocationProviderClient
+    private lateinit var geoCoder: Geocoder
 
     companion object {
         private const val MY_PERMISSIONS_REQUEST_LOCATION = 1
@@ -41,29 +45,31 @@ class checkOutActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_check_out)
-
-        val auth = FirebaseAuth.getInstance()
         val currentTimeTextView: TextView = findViewById(R.id.currentTimeTextViewco)
         val authButton: Button = findViewById(R.id.authButtonco)
-
-        locationClient = LocationServices.getFusedLocationProviderClient(this)
-
         val currentTimeZone = TimeZone.getDefault()
         val dateFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
-        dateFormat.timeZone = currentTimeZone
         val currentTime = dateFormat.format(Date())
+        dateFormat.timeZone = currentTimeZone
+        locationClient = LocationServices.getFusedLocationProviderClient(this)
         currentTimeTextView.text = "Current Time: $currentTime"
+
+        /********************************* Click Listener 30-01-2024 ******************************************/
 
         authButton.setOnClickListener {
             startBioAuth()
         }
     }
 
+    /************************** Location Enable Check 30-01-2024 ************************************************/
+
     private fun isLocationEnabled(): Boolean {
         val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
                 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
     }
+
+    /*************************** Location alert Dialogue 30-01-2024 *********************************/
 
     private fun showLocationAlertDialog() {
         val builder = AlertDialog.Builder(this)
@@ -79,6 +85,8 @@ class checkOutActivity : AppCompatActivity() {
         alert.show()
     }
 
+    /********** Function to fetch location (Alternative : We can use Geocoder Function) 30-01-2024 ************************************/
+
     private fun fetchLocation(locationCallback: (String?) -> Unit) {
         if (hasLocationPermissions()) {
             if (ActivityCompat.checkSelfPermission(
@@ -93,11 +101,14 @@ class checkOutActivity : AppCompatActivity() {
             } else {
                 locationClient.lastLocation
                     .addOnSuccessListener { location ->
+                        geoCoder = Geocoder(this, Locale.getDefault())
                         if (location != null) {
-                            val latitude = location.latitude
-                            val longitude = location.longitude
-                            val locationString = "$latitude, $longitude"
-                            locationCallback.invoke(locationString)
+                            val latitude: Double = location.latitude
+                            val longitude: Double = location.longitude
+                            val locationString : List<Address>? =
+                                geoCoder.getFromLocation(latitude, longitude, 1)
+                            val add : String = locationString?.get(0)?.getAddressLine(0) ?:""
+                            locationCallback.invoke(add)
                         } else {
                             showToast("Failed to fetch location")
                             locationCallback.invoke(null)
@@ -114,6 +125,8 @@ class checkOutActivity : AppCompatActivity() {
         }
     }
 
+    /******************************  Location permission check 30-01-2024  ***************************************/
+
 
     private fun hasLocationPermissions(): Boolean {
         return ActivityCompat.checkSelfPermission(
@@ -125,37 +138,50 @@ class checkOutActivity : AppCompatActivity() {
         ) == PackageManager.PERMISSION_GRANTED
     }
 
+    /*************** Change updateCheckOut Function to add Status of presentee and Duration Fields 09-02-2024 ************/
+
     private fun updateCheckOutDetails(uid: String?, checkOutLocation: String?, checkOutTime: String?) {
         val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
         fetchUsername(uid) { username ->
             if (username != null) {
                 val db = FirebaseFirestore.getInstance()
-
-                // Update checkout_time and checkout_location for today's date and username
                 db.collection("attendance")
                     .whereEqualTo("Date", currentDate)
                     .whereEqualTo("Employee Name", username)
+                    .whereEqualTo("Check-Out Time", "")
+                    .whereEqualTo("Duration", "")
                     .get()
                     .addOnSuccessListener { querySnapshot ->
                         for (document in querySnapshot.documents) {
                             val attendanceId = document.id
-                            val updateData = mutableMapOf<String, Any?>()
-                            updateData["Check-Out Time"] = checkOutTime
-                            if (checkOutLocation != null) {
-                                updateData["Check-Out Location"] = checkOutLocation
-                            }
+                            val checkInTime = document.getString("Check-In Time")
 
-                            db.collection("attendance")
-                                .document(attendanceId)
-                                .update(updateData)
-                                .addOnSuccessListener {
-                                    showToast("Check-Out successful")
-                                    val intent = Intent(this, homeActivity::class.java)
-                                    startActivity(intent)
+                            if (checkInTime != null) {
+                                val duration = calculateDuration(checkInTime, checkOutTime)
+                                val updateData = mutableMapOf<String, Any?>()
+                                val status = calculateStatus(duration)
+                                updateData["Check-Out Time"] = checkOutTime
+                                updateData["Duration"] = duration
+                                updateData["Status"] = status
+
+                                if (checkOutLocation != null) {
+                                    updateData["Check-Out Location"] = checkOutLocation
                                 }
-                                .addOnFailureListener {
-                                    showToast("Failed to update Check-Out details")
-                                }
+
+                                db.collection("attendance")
+                                    .document(attendanceId)
+                                    .update(updateData)
+                                    .addOnSuccessListener {
+                                        showToast("Check-Out successful")
+                                        val intent = Intent(this, homeActivity::class.java)
+                                        startActivity(intent)
+                                    }
+                                    .addOnFailureListener {
+                                        showToast("Failed to update Check-Out details")
+                                    }
+                            } else {
+                                showToast("Check-In Time not found")
+                            }
                         }
                     }
                     .addOnFailureListener {
@@ -167,6 +193,35 @@ class checkOutActivity : AppCompatActivity() {
         }
     }
 
+    /********************** Created Function to Decide Status Based on Duration 09-02-2024 *********************************/
+
+    private fun calculateStatus(duration: String): String {
+
+        val totalMinutes = duration.split(":")[0].toInt() * 60 + duration.split(":")[1].toInt()
+
+        return when {
+            totalMinutes > 390 -> "Present"
+            totalMinutes in 270..390 -> "Half Day"
+            else -> "Absent"
+        }
+    }
+
+
+    /**************************** Created Function to calculate Duration 09-02-2024 ***************************************/
+
+    private fun calculateDuration(checkInTime: String, checkOutTime: String?): String {
+        val dateFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
+        val startDate = dateFormat.parse(checkInTime)
+        val endDate = dateFormat.parse(checkOutTime)
+
+        val diff = endDate.time - startDate.time
+        val hours = diff / (60 * 60 * 1000)
+        val minutes = (diff % (60 * 60 * 1000)) / (60 * 1000)
+
+        return String.format("%02d:%02d", hours, minutes)
+    }
+
+    /*********** Created Function to fetch username from employeeDetails Collection to use as Condition in update query **************/
 
     private fun fetchUsername(uid: String?, callback: (String?) -> Unit) {
         val db = FirebaseFirestore.getInstance()
@@ -189,9 +244,13 @@ class checkOutActivity : AppCompatActivity() {
             }
     }
 
+    /*********************************Created function to show toast message 02-02-2024 **************************************/
+
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
+
+    /*********************************** Created Function to get current time 02-02-2024 ****************************************/
 
     private fun getCurrentTime(): String {
         val currentTimeZone = TimeZone.getDefault()
@@ -199,6 +258,8 @@ class checkOutActivity : AppCompatActivity() {
         dateFormat.timeZone = currentTimeZone
         return dateFormat.format(Date())
     }
+
+    /********************************* Function to Execute Local Authentication 05-02-2024 *****************************************/
 
     private fun startBioAuth() {
         val faceId = BiometricAuthRequest(

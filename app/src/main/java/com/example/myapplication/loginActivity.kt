@@ -1,9 +1,10 @@
 package com.example.myapplication
-
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -22,6 +23,7 @@ class loginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
 
+    @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -30,7 +32,7 @@ class loginActivity : AppCompatActivity() {
         firestore = FirebaseFirestore.getInstance()
 
         val loginButton = findViewById<Button>(R.id.Login1)
-        val registerButton = findViewById<Button>(R.id.btnReg)
+        val registerButton = findViewById<TextView>(R.id.btnreg)
 
         loginButton.setOnClickListener {
             startBioAuth()

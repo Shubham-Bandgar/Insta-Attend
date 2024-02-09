@@ -5,6 +5,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Address
+import android.location.Geocoder
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
@@ -27,11 +29,14 @@ import dev.skomlach.biometric.compat.BiometricManagerCompat
 import dev.skomlach.biometric.compat.BiometricPromptCompat
 import dev.skomlach.biometric.compat.BiometricType
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
 
 class checkInActivity : AppCompatActivity() {
 
     private lateinit var locationClient: FusedLocationProviderClient
+    private lateinit var geoCoder : Geocoder
 
     companion object {
         private const val MY_PERMISSIONS_REQUEST_LOCATION = 1
@@ -41,8 +46,6 @@ class checkInActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_check_in)
-
-        val auth = FirebaseAuth.getInstance()
         val currentTimeTextView: TextView = findViewById(R.id.currentTimeTextView)
         val authButton: Button = findViewById(R.id.authButton)
 
@@ -90,6 +93,7 @@ class checkInActivity : AppCompatActivity() {
     }
 
     private fun fetchLocation(locationCallback: (location: String?) -> Unit) {
+        geoCoder = Geocoder(this, Locale.getDefault())
         if (hasLocationPermissions()) {
             if (ActivityCompat.checkSelfPermission(
                     this,
@@ -104,10 +108,12 @@ class checkInActivity : AppCompatActivity() {
             locationClient.lastLocation
                 .addOnSuccessListener { location ->
                     if (location != null) {
-                        val latitude = location.latitude
-                        val longitude = location.longitude
-                        val locationString = "$latitude, $longitude"
-                        locationCallback.invoke(locationString)
+                        val latitude: Double = location.latitude
+                        val longitude: Double = location.longitude
+                        val locationString : List<Address>? =
+                            geoCoder.getFromLocation(latitude, longitude, 1)
+                        val add : String = locationString?.get(0)?.getAddressLine(0) ?:""
+                        locationCallback.invoke(add)
                     } else {
                         locationCallback.invoke(null)
                     }
@@ -150,12 +156,14 @@ class checkInActivity : AppCompatActivity() {
                 val attendanceDetails = hashMapOf(
                     "Employee Name" to employeeName,
                     "Date" to currentDate,
-                    "Status" to activityType,
                     "Check-In Time" to currentTime,
                     "Check-In Location" to location,
                     "Check-Out Time" to "",
-                    "Check-Out Location" to ""
+                    "Check-Out Location" to "",
+                    "Duration" to "",
+                    "Status" to "",
                 )
+
                 if (activityType == "Check-Out") {
                     attendanceDetails["Check-Out Time"] = checkOutTime ?: currentTime
                     attendanceDetails["Check-Out Location"] = checkOutLocation ?: location
