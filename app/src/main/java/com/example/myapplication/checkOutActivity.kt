@@ -173,8 +173,9 @@ class checkOutActivity : AppCompatActivity() {
                                     .update(updateData)
                                     .addOnSuccessListener {
                                         showToast("Check-Out successful")
-                                        val intent = Intent(this, homeActivity::class.java)
+                                        val intent = Intent(this, LoadingActivity::class.java)
                                         startActivity(intent)
+                                        finish()
                                     }
                                     .addOnFailureListener {
                                         showToast("Failed to update Check-Out details")

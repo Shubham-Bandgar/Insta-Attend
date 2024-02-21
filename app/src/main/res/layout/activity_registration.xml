@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="516dp"
-        android:layout_height="433dp"
+        android:layout_width="@dimen/_400sdp"
+        android:layout_height="@dimen/_433sdp"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.39"
@@ -44,8 +44,8 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="89dp"
-        android:layout_height="78dp"
+        android:layout_width="@dimen/_88sdp"
+        android:layout_height="@dimen/_78sdp"
         android:layout_marginEnd="10dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,8 +72,8 @@
 
             <EditText
                 android:id="@+id/editTextText5"
-                android:layout_width="324dp"
-                android:layout_height="48dp"
+                android:layout_width="@dimen/_270sdp"
+                android:layout_height="@dimen/_40sdp"
                 android:background="@drawable/edit_text_background"
                 android:drawableLeft="@drawable/baseline_drive_file_rename_outline_24"
                 android:drawablePadding="40dp"
@@ -83,14 +83,16 @@
                 android:padding="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.484"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.063" />
+                app:layout_constraintVertical_bias="0.034" />
+
 
             <EditText
                 android:id="@+id/editTextTextEmailAddress4"
-                android:layout_width="324dp"
-                android:layout_height="48dp"
+                android:layout_width="@dimen/_270sdp"
+                android:layout_height="@dimen/_40sdp"
                 android:background="@drawable/edit_text_background"
 
                 android:drawableLeft="@drawable/baseline_email_24"
@@ -102,14 +104,15 @@
                 android:padding="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.515"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.19" />
+                app:layout_constraintVertical_bias="0.168" />
 
             <EditText
                 android:id="@+id/editTextTextPassword5"
-                android:layout_width="324dp"
-                android:layout_height="48dp"
+                android:layout_width="@dimen/_270sdp"
+                android:layout_height="@dimen/_40sdp"
                 android:background="@drawable/edit_text_background"
                 android:drawableLeft="@drawable/baseline_lock_24"
                 android:drawablePadding="40dp"
@@ -120,14 +123,15 @@
                 android:padding="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.484"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.431" />
+                app:layout_constraintVertical_bias="0.428" />
 
             <EditText
                 android:id="@+id/editTextTextPassword6"
-                android:layout_width="324dp"
-                android:layout_height="48dp"
+                android:layout_width="@dimen/_270sdp"
+                android:layout_height="@dimen/_40sdp"
                 android:background="@drawable/edit_text_background"
                 android:drawableLeft="@drawable/baseline_lock_24"
                 android:drawablePadding="40dp"
@@ -138,15 +142,15 @@
                 android:padding="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.484"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.551" />
-
+                app:layout_constraintVertical_bias="0.565" />
 
             <Button
                 android:id="@+id/button5"
-                android:layout_width="177dp"
-                android:layout_height="66dp"
+                android:layout_width="@dimen/_110sdp"
+                android:layout_height="@dimen/_50sdp"
                 android:backgroundTint="@color/app_theme"
                 android:text="Register"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -154,12 +158,12 @@
                 app:layout_constraintHorizontal_bias="0.502"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.839" />
+                app:layout_constraintVertical_bias="0.857" />
 
             <TextView
                 android:id="@+id/textView3"
-                android:layout_width="227dp"
-                android:layout_height="59dp"
+                android:layout_width="@dimen/_200sdp"
+                android:layout_height="@dimen/_30sdp"
                 android:text="Already Registered.. Login Now"
                 android:textAlignment="center"
                 android:textColor="@color/app_theme"
@@ -167,12 +171,12 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintVertical_bias="0.966" />
 
             <EditText
                 android:id="@+id/phoneNumberEditText"
-                android:layout_width="324dp"
-                android:layout_height="48dp"
+                android:layout_width="@dimen/_270sdp"
+                android:layout_height="@dimen/_40sdp"
                 android:background="@drawable/edit_text_background"
                 android:drawableLeft="@drawable/baseline_phone_24"
                 android:drawablePadding="40dp"
@@ -183,14 +187,15 @@
                 android:padding="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.484"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.308" />
+                app:layout_constraintVertical_bias="0.3" />
 
             <Spinner
                 android:id="@+id/spinner"
-                android:layout_width="264dp"
-                android:layout_height="48dp"
+                android:layout_width="@dimen/_230sdp"
+                android:layout_height="@dimen/_40sdp"
                 android:background="@drawable/edit_text_background"
                 android:drawableLeft="@drawable/baseline_arrow_drop_down_24"
                 android:drawablePadding="8dp"
@@ -199,9 +204,10 @@
                 android:padding="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.505"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.676" />
+                app:layout_constraintVertical_bias="0.697" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

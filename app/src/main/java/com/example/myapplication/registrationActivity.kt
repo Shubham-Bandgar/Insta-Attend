@@ -2,8 +2,11 @@ package com.example.myapplication
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -18,14 +21,35 @@ import dev.skomlach.biometric.compat.BiometricManagerCompat
 import dev.skomlach.biometric.compat.BiometricPromptCompat
 import dev.skomlach.biometric.compat.BiometricType
 
+
 class registrationActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
+    private var fence = false;
+    private var type = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)
+
+        val spinner = findViewById<Spinner>(R.id.spinner)
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val selectedItem = parent.getItemAtPosition(position).toString()
+                fence = selectedItem == "Corporate Employee"
+                type = selectedItem
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                showToast("Please Select your employment type")
+            }
+        }
         val txtButton = findViewById<TextView>(R.id.textView3)
 
         txtButton.setOnClickListener{
@@ -59,45 +83,52 @@ class registrationActivity : AppCompatActivity() {
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        val user = auth.currentUser
-                        val uid = user?.uid
-                        val employeeDetails = hashMapOf(
-                            "username" to username,
-                            "email" to email,
-                            "phoneNumber" to phoneNumber,
-                            "isEnrolled" to false
-                        )
+                        auth.currentUser?.sendEmailVerification()
+                            ?.addOnSuccessListener {
+                                val user = auth.currentUser
+                                val uid = user?.uid
+                                val employeeDetails = hashMapOf(
+                                    "username" to username,
+                                    "email" to email,
+                                    "phoneNumber" to phoneNumber,
+                                    "isEnrolled" to false,
+                                    "employeeType" to type,
+                                    "geoFencing" to fence,
+                                )
 
-                        if (uid != null) {
-                            firestore.collection("employeeDetails")
-                                .document(uid)
-                                .set(employeeDetails)
-                                .addOnSuccessListener {
+                                if (uid != null) {
+                                    firestore.collection("employeeDetails")
+                                        .document(uid)
+                                        .set(employeeDetails)
+                                        .addOnSuccessListener {
+                                            Toast.makeText(
+                                                this,
+                                                "Please Check Your email for verification link",
+                                                Toast.LENGTH_LONG
+                                            ).show()
+                                            val intent = Intent(this, loginActivity::class.java)
+                                            startActivity(intent)
+                                        }
+                                        .addOnFailureListener { e ->
+                                            Toast.makeText(
+                                                this,
+                                                "Failed to store employee details",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                } else {
                                     Toast.makeText(
                                         this,
-                                        "Registration successful",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                    val intent = Intent(this, loginActivity::class.java)
-                                    startActivity(intent)
-                                }
-                                .addOnFailureListener { e ->
-                                    Toast.makeText(
-                                        this,
-                                        "Failed to store employee details",
+                                        "Registration failed: ${task.exception?.message}",
                                         Toast.LENGTH_SHORT
                                     ).show()
                                 }
-                        }
-
-                    } else {
-                        Toast.makeText(
-                            this,
-                            "Registration failed: ${task.exception?.message}",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                            }
+                            ?.addOnFailureListener{
+                                showToast("Invalid Email")
+                            }
                     }
-                }
+                            }
         } else {
             Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
         }

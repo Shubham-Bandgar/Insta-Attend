@@ -35,8 +35,8 @@
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="516dp"
-        android:layout_height="433dp"
+        android:layout_width="@dimen/_400sdp"
+        android:layout_height="@dimen/_433sdp"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.609"
@@ -47,8 +47,8 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="88dp"
-        android:layout_height="78dp"
+        android:layout_width="@dimen/_88sdp"
+        android:layout_height="@dimen/_78sdp"
         android:layout_marginEnd="10dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="parent"
@@ -75,8 +75,8 @@
 
             <EditText
                 android:id="@+id/editTextText5"
-                android:layout_width="358dp"
-                android:layout_height="65dp"
+                android:layout_width="@dimen/_270sdp"
+                android:layout_height="@dimen/_50sdp"
                 android:background="@drawable/edit_text_background"
                 android:drawableLeft="@drawable/baseline_email_24"
                 android:drawablePadding="40dp"
@@ -93,8 +93,8 @@
 
             <EditText
                 android:id="@+id/editTextTextPassword5"
-                android:layout_width="358dp"
-                android:layout_height="65dp"
+                android:layout_width="@dimen/_270sdp"
+                android:layout_height="@dimen/_50sdp"
                 android:background="@drawable/edit_text_background"
                 android:drawableLeft="@drawable/baseline_lock_24"
                 android:drawablePadding="40dp"
@@ -110,9 +110,22 @@
                 app:layout_constraintVertical_bias="0.34" />
 
             <TextView
+                android:id="@+id/forgot"
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:text="Forgot Password?"
+                android:textAlignment="center"
+                android:textColor="@color/app_theme"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.869" />
+
+            <TextView
                 android:id="@+id/btnreg"
-                android:layout_width="123dp"
-                android:layout_height="31dp"
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="@dimen/_30sdp"
                 android:text="Register Now"
                 android:textAlignment="center"
                 android:textColor="@color/app_theme"
@@ -124,8 +137,8 @@
 
             <Button
                 android:id="@+id/Login1"
-                android:layout_width="117dp"
-                android:layout_height="64dp"
+                android:layout_width="@dimen/_110sdp"
+                android:layout_height="@dimen/_50sdp"
                 android:backgroundTint="@color/app_theme"
                 android:text="Login"
                 app:layout_constraintBottom_toBottomOf="parent"

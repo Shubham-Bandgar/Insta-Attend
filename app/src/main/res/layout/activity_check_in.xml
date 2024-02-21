@@ -34,8 +34,8 @@
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="516dp"
-        android:layout_height="433dp"
+        android:layout_width="@dimen/_400sdp"
+        android:layout_height="@dimen/_433sdp"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.609"
@@ -46,8 +46,8 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="88dp"
-        android:layout_height="78dp"
+        android:layout_width="@dimen/_88sdp"
+        android:layout_height="@dimen/_78sdp"
         android:layout_marginEnd="10dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="parent"
@@ -74,8 +74,8 @@
 
             <Button
                 android:id="@+id/authButton"
-                android:layout_width="205dp"
-                android:layout_height="57dp"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="@dimen/_50sdp"
                 android:backgroundTint="@color/app_theme"
                 android:drawableLeft="@drawable/baseline_login_24"
                 android:drawableTint="@color/app_theme_light"
@@ -90,8 +90,8 @@
 
             <TextView
                 android:id="@+id/currentTimeTextView"
-                android:layout_width="356dp"
-                android:layout_height="41dp"
+                android:layout_width="@dimen/_230sdp"
+                android:layout_height="@dimen/_35sdp"
                 android:drawablePadding="5dp"
                 android:drawableTint="@color/app_theme"
                 android:padding="8dp"
@@ -110,8 +110,8 @@
 
             <TextView
                 android:id="@+id/textView9"
-                android:layout_width="291dp"
-                android:layout_height="63dp"
+                android:layout_width="@dimen/_240sdp"
+                android:layout_height="@dimen/_30sdp"
                 android:text="You are about to CheckIn"
                 android:textAlignment="center"
                 android:textColor="#E10934"

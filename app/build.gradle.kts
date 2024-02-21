@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
+    id("com.google.firebase.firebase-perf")
 }
 
 android {
@@ -56,6 +57,7 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore:24.10.1")
     implementation("com.google.android.gms:play-services-location:21.1.0")
     implementation("androidx.databinding:compilerCommon:3.2.0-alpha11")
+    implementation("com.google.firebase:firebase-perf:20.5.2")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -63,5 +65,8 @@ dependencies {
     implementation("androidx.biometric:biometric:1.1.0")
     implementation("dev.skomlach:biometric:2.2.26")
     implementation("dev.skomlach:biometric-ktx:2.2.26")
+    implementation("com.airbnb.android:lottie:6.3.0")
+    implementation("com.intuit.sdp:sdp-android:1.1.0")
+    implementation("com.intuit.ssp:ssp-android:1.1.0")
 
 }

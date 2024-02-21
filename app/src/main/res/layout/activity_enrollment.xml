@@ -34,8 +34,8 @@
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="516dp"
-        android:layout_height="433dp"
+        android:layout_width="@dimen/_400sdp"
+        android:layout_height="@dimen/_433sdp"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.609"
@@ -46,8 +46,8 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="88dp"
-        android:layout_height="78dp"
+        android:layout_width="@dimen/_88sdp"
+        android:layout_height="@dimen/_78sdp"
         android:layout_marginEnd="10dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="parent"
@@ -74,8 +74,8 @@
 
             <TextView
                 android:id="@+id/enrollMsg"
-                android:layout_width="318dp"
-                android:layout_height="99dp"
+                android:layout_width="@dimen/_230sdp"
+                android:layout_height="@dimen/_75sdp"
                 android:text="You are not enrolled yet as employee of this organization please wait until approval from admin."
                 android:textAlignment="center"
                 android:textColor="@color/app_theme"
@@ -88,8 +88,8 @@
 
             <Button
                 android:id="@+id/extBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="@dimen/_40sdp"
                 android:layout_marginTop="108dp"
                 android:text="Exit App"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -100,9 +100,8 @@
 
             <Button
                 android:id="@+id/logOutBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="@dimen/_40sdp"                android:layout_marginTop="32dp"
                 android:text="Not your credentials?"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

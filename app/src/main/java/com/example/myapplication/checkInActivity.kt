@@ -33,6 +33,7 @@ import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 
+
 class checkInActivity : AppCompatActivity() {
 
     private lateinit var locationClient: FusedLocationProviderClient
@@ -113,7 +114,7 @@ class checkInActivity : AppCompatActivity() {
                         val locationString : List<Address>? =
                             geoCoder.getFromLocation(latitude, longitude, 1)
                         val add : String = locationString?.get(0)?.getAddressLine(0) ?:""
-                        locationCallback.invoke(add)
+
                     } else {
                         locationCallback.invoke(null)
                     }
@@ -173,8 +174,9 @@ class checkInActivity : AppCompatActivity() {
                     .add(attendanceDetails)
                     .addOnSuccessListener {
                         showToast("$activityType successful")
-                        val intent = Intent(this, homeActivity::class.java)
+                        val intent = Intent(this, LoadingActivity::class.java)
                         startActivity(intent)
+                        finish()
 
                     }
                     .addOnFailureListener {
@@ -252,4 +254,26 @@ class checkInActivity : AppCompatActivity() {
             }
         })
     }
+
+    private fun fetchGeoLocation(uid: String?, callback: (String?) -> Unit) {
+        val db = FirebaseFirestore.getInstance()
+        db.collection("employeeDetails")
+            .document(uid!!)
+            .get()
+            .addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot.exists()) {
+                    val fencing = documentSnapshot.getString("geoFencing")
+                    callback.invoke(fencing)
+                } else {
+                    showToast("User does not exist")
+                    callback.invoke(null)
+                }
+            }
+            .addOnFailureListener {
+                showToast("Failed to fetch detail")
+                callback.invoke(null)
+            }
+    }
+
+
 }

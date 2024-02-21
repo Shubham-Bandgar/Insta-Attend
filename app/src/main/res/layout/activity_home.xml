@@ -34,8 +34,8 @@
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="516dp"
-        android:layout_height="433dp"
+        android:layout_width="@dimen/_400sdp"
+        android:layout_height="@dimen/_433sdp"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.609"
@@ -46,8 +46,8 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="88dp"
-        android:layout_height="78dp"
+        android:layout_width="@dimen/_88sdp"
+        android:layout_height="@dimen/_78sdp"
         android:layout_marginEnd="10dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="parent"
@@ -74,50 +74,50 @@
 
             <TextView
                 android:id="@+id/employeeNameTextView"
-                android:layout_width="329dp"
-                android:layout_height="74dp"
+                android:layout_width="@dimen/_230sdp"
+                android:layout_height="@dimen/_55sdp"
                 android:text="Employee Name:"
                 android:textColor="@color/app_theme"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.454"
+                app:layout_constraintHorizontal_bias="0.447"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.208" />
+                app:layout_constraintVertical_bias="0.207" />
 
             <TextView
                 android:id="@+id/employeeEmailTextView"
-                android:layout_width="335dp"
-                android:layout_height="83dp"
+                android:layout_width="@dimen/_230sdp"
+                android:layout_height="@dimen/_55sdp"
                 android:text="Employee Email:"
                 android:textColor="@color/app_theme"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.51"
+                app:layout_constraintHorizontal_bias="0.447"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.383" />
 
             <TextView
                 android:id="@+id/employeePhoneTextView"
-                android:layout_width="304dp"
-                android:layout_height="66dp"
+                android:layout_width="@dimen/_230sdp"
+                android:layout_height="@dimen/_55sdp"
                 android:text="Phone No.:"
                 android:textColor="@color/app_theme"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.312"
+                app:layout_constraintHorizontal_bias="0.447"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.549" />
+                app:layout_constraintVertical_bias="0.561" />
 
             <Button
                 android:id="@+id/button5"
-                android:layout_width="152dp"
-                android:layout_height="49dp"
+                android:layout_width="@dimen/_130sdp"
+                android:layout_height="@dimen/_40sdp"
                 android:backgroundTint="@color/app_theme"
                 android:drawableLeft="@drawable/baseline_login_24"
                 android:drawableTint="@color/app_theme_light"
@@ -125,15 +125,15 @@
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.07"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.705" />
+                app:layout_constraintVertical_bias="0.744" />
 
             <Button
                 android:id="@+id/button6"
-                android:layout_width="wrap_content"
-                android:layout_height="49dp"
+                android:layout_width="@dimen/_135sdp"
+                android:layout_height="@dimen/_40sdp"
                 android:backgroundTint="@color/app_theme"
                 android:drawableLeft="@drawable/baseline_logout_24"
                 android:drawableTint="@color/app_theme_light"
@@ -141,15 +141,15 @@
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.929"
+                app:layout_constraintHorizontal_bias="0.97"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.703" />
+                app:layout_constraintVertical_bias="0.744" />
 
             <TextView
                 android:id="@+id/textView8"
-                android:layout_width="222dp"
-                android:layout_height="44dp"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="@dimen/_40sdp"
                 android:drawablePadding="10dp"
                 android:drawableTint="@color/app_theme"
                 android:shadowColor="#FFEB3B"
@@ -160,15 +160,15 @@
                 app:drawableLeftCompat="@drawable/baseline_co_present_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.58"
+                app:layout_constraintHorizontal_bias="0.576"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.081" />
+                app:layout_constraintVertical_bias="0.057" />
 
             <Button
                 android:id="@+id/btnLogout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_110sdp"
+                android:layout_height="@dimen/_40sdp"
                 android:text="Logout"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

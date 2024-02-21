@@ -23,7 +23,7 @@ class loginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
 
-    @SuppressLint("WrongViewCast")
+    @SuppressLint("WrongViewCast", "MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -33,6 +33,13 @@ class loginActivity : AppCompatActivity() {
 
         val loginButton = findViewById<Button>(R.id.Login1)
         val registerButton = findViewById<TextView>(R.id.btnreg)
+        val forgotButton = findViewById<TextView>(R.id.forgot)
+
+        forgotButton.setOnClickListener {
+            val intent = Intent(this, ForgotPassword::class.java)
+            startActivity(intent)
+            finish()
+        }
 
         loginButton.setOnClickListener {
             startBioAuth()
@@ -82,8 +89,14 @@ class loginActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         val user = auth.currentUser
                         user?.uid?.let { uid ->
-                            checkEnrollmentStatus(uid)
-                            showToast("We are logging you in")
+                            val verify = auth.currentUser?.isEmailVerified
+                            if(verify == true){
+                                checkEnrollmentStatus(uid)
+                                showToast("We are logging you in")
+                            }
+                            else{
+                                showToast("Please verify your Email")
+                            }
                         }
                     } else {
                         Toast.makeText(
