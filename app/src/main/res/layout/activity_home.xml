@@ -75,44 +75,27 @@
             <TextView
                 android:id="@+id/employeeNameTextView"
                 android:layout_width="@dimen/_230sdp"
-                android:layout_height="@dimen/_55sdp"
-                android:text="Employee Name:"
+                android:layout_height="@dimen/_40sdp"
                 android:textColor="@color/app_theme"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.447"
+                app:layout_constraintHorizontal_bias="0.505"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.207" />
+                app:layout_constraintVertical_bias="0.232" />
 
             <TextView
-                android:id="@+id/employeeEmailTextView"
+                android:id="@+id/CircleTextView"
                 android:layout_width="@dimen/_230sdp"
-                android:layout_height="@dimen/_55sdp"
-                android:text="Employee Email:"
+                android:layout_height="@dimen/_40sdp"
                 android:textColor="@color/app_theme"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/button5"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.447"
+                app:layout_constraintHorizontal_bias="0.505"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.383" />
-
-            <TextView
-                android:id="@+id/employeePhoneTextView"
-                android:layout_width="@dimen/_230sdp"
-                android:layout_height="@dimen/_55sdp"
-                android:text="Phone No.:"
-                android:textColor="@color/app_theme"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.447"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.561" />
+                app:layout_constraintTop_toBottomOf="@+id/employeeNameTextView"
+                app:layout_constraintVertical_bias="0.235" />
 
             <Button
                 android:id="@+id/button5"
@@ -125,10 +108,10 @@
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_bias="0.502"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.744" />
+                app:layout_constraintVertical_bias="0.528" />
 
             <Button
                 android:id="@+id/button6"
@@ -141,40 +124,47 @@
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.97"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.744" />
+                app:layout_constraintVertical_bias="0.682" />
 
             <TextView
                 android:id="@+id/textView8"
-                android:layout_width="@dimen/_150sdp"
-                android:layout_height="@dimen/_40sdp"
-                android:drawablePadding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="55dp"
+                android:drawablePadding="@dimen/activity_horizontal_margin"
                 android:drawableTint="@color/app_theme"
+                android:padding="@dimen/_5sdp"
                 android:shadowColor="#FFEB3B"
-                android:text="My Profile"
+                android:text="Dashboard"
                 android:textAlignment="viewStart"
                 android:textColor="@color/app_theme"
                 android:textSize="30sp"
                 app:drawableLeftCompat="@drawable/baseline_co_present_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.576"
+                app:layout_constraintHorizontal_bias="0.502"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.057" />
 
-            <Button
-                android:id="@+id/btnLogout"
-                android:layout_width="@dimen/_110sdp"
-                android:layout_height="@dimen/_40sdp"
-                android:text="Logout"
+            <TextView
+                android:id="@+id/seeDetails"
+                android:layout_width="150dp"
+                android:layout_height="33dp"
+                android:drawableRight="@drawable/baseline_content_paste_go_24"
+                android:drawableTint="#F44336"
+                android:text="My Details"
+                android:textAlignment="center"
+                android:textColor="#F44336"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.89" />
+                app:layout_constraintTop_toBottomOf="@+id/button6" />
+
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 

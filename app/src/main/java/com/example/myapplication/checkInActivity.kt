@@ -11,6 +11,7 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -39,16 +40,20 @@ class checkInActivity : AppCompatActivity() {
     private lateinit var locationClient: FusedLocationProviderClient
     private lateinit var geoCoder : Geocoder
 
-    companion object {
-        private const val MY_PERMISSIONS_REQUEST_LOCATION = 1
-    }
-
     @SuppressLint("MissingInflatedId", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_check_in)
         val currentTimeTextView: TextView = findViewById(R.id.currentTimeTextView)
         val authButton: Button = findViewById(R.id.authButton)
+        val image = findViewById<ImageView>(R.id.imageView2)
+
+
+        image.setOnClickListener{
+            val intent = Intent(this, homeActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
         locationClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -57,7 +62,6 @@ class checkInActivity : AppCompatActivity() {
         dateFormat.timeZone = currentTimeZone
         val currentTime = dateFormat.format(Date())
         currentTimeTextView.text = "Current Time: $currentTime"
-
         authButton.setOnClickListener {
             startBioAuth()
         }
@@ -114,7 +118,7 @@ class checkInActivity : AppCompatActivity() {
                         val locationString : List<Address>? =
                             geoCoder.getFromLocation(latitude, longitude, 1)
                         val add : String = locationString?.get(0)?.getAddressLine(0) ?:""
-
+                        locationCallback.invoke(add)
                     } else {
                         locationCallback.invoke(null)
                     }
@@ -157,12 +161,12 @@ class checkInActivity : AppCompatActivity() {
                 val attendanceDetails = hashMapOf(
                     "Employee Name" to employeeName,
                     "Date" to currentDate,
-                    "Check-In Time" to currentTime,
+                    "CheckIn_Time" to currentTime,
                     "Check-In Location" to location,
-                    "Check-Out Time" to "",
+                    "CheckOut_Time" to "",
                     "Check-Out Location" to "",
-                    "Duration" to "",
-                    "Status" to "",
+                    "Duration" to "00:00",
+                    "Status" to "Absent",
                 )
 
                 if (activityType == "Check-Out") {

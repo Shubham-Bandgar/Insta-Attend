@@ -1,15 +1,20 @@
 package com.example.myapplication
 
+import CircleAdapter
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dev.skomlach.biometric.compat.AuthenticationFailureReason
@@ -20,14 +25,14 @@ import dev.skomlach.biometric.compat.BiometricConfirmation
 import dev.skomlach.biometric.compat.BiometricManagerCompat
 import dev.skomlach.biometric.compat.BiometricPromptCompat
 import dev.skomlach.biometric.compat.BiometricType
-
+import java.util.regex.Pattern
 
 class registrationActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
-    private var fence = false;
-    private var type = ""
+    private var fence = false
+    private lateinit var selectedItem : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,24 +40,46 @@ class registrationActivity : AppCompatActivity() {
 
         val spinner = findViewById<Spinner>(R.id.spinner)
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                val selectedItem = parent.getItemAtPosition(position).toString()
-                fence = selectedItem == "Corporate Employee"
-                type = selectedItem
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                selectedItem = parent.getItemAtPosition(position).toString()
             }
-
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 showToast("Please Select your employment type")
             }
         }
-        val txtButton = findViewById<TextView>(R.id.textView3)
 
-        txtButton.setOnClickListener{
+        //Hint for password pattern
+        val editText = findViewById<EditText>(R.id.editTextTextPassword5)
+        val hintTextView = findViewById<TextView>(R.id.hintTextView)
+        editText.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                // When the EditText gains focus, show the hint below it
+                hintTextView.visibility = View.VISIBLE
+            } else {
+                // When the EditText loses focus, hide the hint
+                hintTextView.visibility = View.GONE
+                }
+
+            }
+
+        val floatingActionButton = findViewById<FloatingActionButton>(R.id.backtohome)
+
+        floatingActionButton.setOnClickListener {
+            val intent = Intent(this, preLogActivity::class.java)
+            startActivity(intent)
+        }
+
+        //logo image
+        val imageView=findViewById<ImageView>(R.id.imageView2)
+        imageView.setOnClickListener {
+            val intent=Intent(this,preLogActivity::class.java)
+            startActivity(intent)
+            }
+
+
+
+        val txtButton = findViewById<TextView>(R.id.textView3)
+        txtButton.setOnClickListener {
             val intent = Intent(this, loginActivity::class.java)
             startActivity(intent)
         }
@@ -62,11 +89,71 @@ class registrationActivity : AppCompatActivity() {
 
         val buttonNavigate = findViewById<Button>(R.id.button5)
         buttonNavigate.setOnClickListener {
+            //validations
+            val usernameEditText = findViewById<EditText>(R.id.editTextText5)
+            val emailEditText = findViewById<EditText>(R.id.editTextTextEmailAddress4)
+            val phoneNumberEditText: EditText = findViewById(R.id.phoneNumberEditText)
+            val enteredPhoneNumber: String = phoneNumberEditText.text.toString().trim()
+            if(usernameEditText==null){
+                Toast.makeText(this,"Please Enter Your Name",Toast.LENGTH_LONG).show()
+            }
+
+            if(emailEditText==null){
+                Toast.makeText(this,"Please Enter Email",Toast.LENGTH_LONG).show()
+            }
+
+            // Validate the phone number
+            if (isValidPhoneNumber(enteredPhoneNumber)) {
+                // Valid phone number format with 10 digits
+            } else {
+                // Invalid phone number format
+                Toast.makeText(this, "Invalid phone number. Please enter a 10-digit number", Toast.LENGTH_SHORT).show()
+            }
+
+            //validate password
+            val passwordEditText: EditText = findViewById(R.id.editTextTextPassword5)
+
+            // Get the entered values
+            val password: String = passwordEditText.text.toString().trim()
+
+            // Validate the password
+            if (!isValidPassword(password)) {
+                Toast.makeText(this, "Invalid password format.", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
+            //bioAuthentication
             startBioAuth()
-        }
+            }
+
+        fetchCircleData()
     }
 
-    private fun registerUser(){
+    private fun fetchCircleData() {
+        val spinner = findViewById<Spinner>(R.id.spinner)
+        val circleCollection = FirebaseFirestore.getInstance().collection("Circle")
+        circleCollection.get()
+            .addOnSuccessListener { result ->
+                val circleNames = ArrayList<String>()
+
+                for (document in result) {
+                    val circleName = document.id
+                    circleNames.add(circleName)
+                }
+
+                val adapter = CircleAdapter(this, android.R.layout.simple_spinner_item, circleNames)
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                spinner.adapter = adapter
+            }
+            .addOnFailureListener { exception ->
+                showToast("Error fetching Circle data: $exception")
+            }
+    }
+
+
+
+
+    private fun registerUser() {
         val usernameEditText = findViewById<EditText>(R.id.editTextText5)
         val emailEditText = findViewById<EditText>(R.id.editTextTextEmailAddress4)
         val passwordEditText = findViewById<EditText>(R.id.editTextTextPassword5)
@@ -91,9 +178,10 @@ class registrationActivity : AppCompatActivity() {
                                     "username" to username,
                                     "email" to email,
                                     "phoneNumber" to phoneNumber,
+                                    "Circle" to selectedItem,
                                     "isEnrolled" to false,
-                                    "employeeType" to type,
                                     "geoFencing" to fence,
+                                    "deletePermission" to null
                                 )
 
                                 if (uid != null) {
@@ -101,13 +189,9 @@ class registrationActivity : AppCompatActivity() {
                                         .document(uid)
                                         .set(employeeDetails)
                                         .addOnSuccessListener {
-                                            Toast.makeText(
-                                                this,
-                                                "Please Check Your email for verification link",
-                                                Toast.LENGTH_LONG
-                                            ).show()
-                                            val intent = Intent(this, loginActivity::class.java)
-                                            startActivity(intent)
+                                            val registerProgressBar = findViewById<ProgressBar>(R.id.registerProgressbar)
+                                            registerProgressBar.visibility = View.GONE
+                                            showSuccessDialog()
                                         }
                                         .addOnFailureListener { e ->
                                             Toast.makeText(
@@ -117,22 +201,22 @@ class registrationActivity : AppCompatActivity() {
                                             ).show()
                                         }
                                 } else {
-                                    Toast.makeText(
-                                        this,
-                                        "Registration failed: ${task.exception?.message}",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                    showToast(
+                                        "Registration failed: ${task.exception?.message}"
+                                    )
                                 }
                             }
-                            ?.addOnFailureListener{
+                            ?.addOnFailureListener {
+                                showToast(it.toString())
                                 showToast("Invalid Email")
                             }
                     }
-                            }
+                }
         } else {
             Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
         }
     }
+
     private fun startBioAuth() {
         val faceId = BiometricAuthRequest(
             BiometricApi.AUTO,
@@ -153,6 +237,8 @@ class registrationActivity : AppCompatActivity() {
         prompt.build().authenticate(object : BiometricPromptCompat.AuthenticationCallback() {
             override fun onSucceeded(confirmed: Set<AuthenticationResult>) {
                 super.onSucceeded(confirmed)
+                val registerProgressBar = findViewById<ProgressBar>(R.id.registerProgressbar)
+                registerProgressBar.visibility = View.VISIBLE
                 registerUser()
             }
 
@@ -168,7 +254,48 @@ class registrationActivity : AppCompatActivity() {
             }
         })
     }
+
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
+
+    private fun isValidPhoneNumber(phoneNumber: String): Boolean {
+        // Remove non-digit characters
+        val cleanPhoneNumber = phoneNumber.replace("[^\\d]".toRegex(), "")
+
+        // Check if the cleaned phone number has exactly 10 digits
+        return cleanPhoneNumber.length == 10
+    }
+
+    // Function to validate password with specific pattern
+    private fun isValidPassword(password: String): Boolean {
+        val PASSWORD_PATTERN: Pattern = Pattern.compile(
+            "^" +
+                    "(?=.*[0-9])" +         // at least 1 digit
+                    "(?=.*[a-zA-Z])" +      // at least 1 letter
+                    "(?=.*[@#$%^&+=])" +    // at least 1 special character
+                    "(?=\\S+$)" +           // no white spaces
+                    ".{6,}" +               // at least 8 characters
+                    "$"
+        )
+
+        return PASSWORD_PATTERN.matcher(password).matches()
+    }
+
+    //showSuccessDialog
+    private fun showSuccessDialog(){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Registration Successful")
+            .setMessage("Please Check Your email for verification link")
+            .setCancelable(true)
+            .setPositiveButton("OK") { dialogInterface,it->
+                val intent = Intent(this, loginActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+            .create()
+        .show()
+
+        }
+
 }

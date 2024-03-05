@@ -11,6 +11,7 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -37,10 +38,6 @@ class checkOutActivity : AppCompatActivity() {
     private lateinit var locationClient: FusedLocationProviderClient
     private lateinit var geoCoder: Geocoder
 
-    companion object {
-        private const val MY_PERMISSIONS_REQUEST_LOCATION = 1
-    }
-
     @SuppressLint("MissingInflatedId", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +47,13 @@ class checkOutActivity : AppCompatActivity() {
         val currentTimeZone = TimeZone.getDefault()
         val dateFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
         val currentTime = dateFormat.format(Date())
+        val image = findViewById<ImageView>(R.id.imageView2)
+
+        image.setOnClickListener{
+            val intent = Intent(this, homeActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
         dateFormat.timeZone = currentTimeZone
         locationClient = LocationServices.getFusedLocationProviderClient(this)
         currentTimeTextView.text = "Current Time: $currentTime"
@@ -105,8 +109,7 @@ class checkOutActivity : AppCompatActivity() {
                         if (location != null) {
                             val latitude: Double = location.latitude
                             val longitude: Double = location.longitude
-                            val locationString : List<Address>? =
-                                geoCoder.getFromLocation(latitude, longitude, 1)
+                            val locationString : List<Address>? = geoCoder.getFromLocation(latitude, longitude, 1)
                             val add : String = locationString?.get(0)?.getAddressLine(0) ?:""
                             locationCallback.invoke(add)
                         } else {
@@ -148,19 +151,19 @@ class checkOutActivity : AppCompatActivity() {
                 db.collection("attendance")
                     .whereEqualTo("Date", currentDate)
                     .whereEqualTo("Employee Name", username)
-                    .whereEqualTo("Check-Out Time", "")
-                    .whereEqualTo("Duration", "")
+                    .whereEqualTo("CheckOut_Time", "")
+                    .whereEqualTo("Duration", "00:00")
                     .get()
                     .addOnSuccessListener { querySnapshot ->
                         for (document in querySnapshot.documents) {
                             val attendanceId = document.id
-                            val checkInTime = document.getString("Check-In Time")
+                            val check_InTime = document.getString("CheckIn_Time")
 
-                            if (checkInTime != null) {
-                                val duration = calculateDuration(checkInTime, checkOutTime)
+                            if (check_InTime != null) {
+                                val duration = calculateDuration(check_InTime, checkOutTime)
                                 val updateData = mutableMapOf<String, Any?>()
                                 val status = calculateStatus(duration)
-                                updateData["Check-Out Time"] = checkOutTime
+                                updateData["CheckOut_Time"] = checkOutTime
                                 updateData["Duration"] = duration
                                 updateData["Status"] = status
 
@@ -178,7 +181,7 @@ class checkOutActivity : AppCompatActivity() {
                                         finish()
                                     }
                                     .addOnFailureListener {
-                                        showToast("Failed to update Check-Out details")
+                                        showToast("Failed to update Check_Out details")
                                     }
                             } else {
                                 showToast("Check-In Time not found")
@@ -287,10 +290,9 @@ class checkOutActivity : AppCompatActivity() {
                     val id = auth.currentUser?.uid
 
                     fetchLocation { location ->
-                        val checkOutTime = getCurrentTime()
-
+                        val check_OutTime = getCurrentTime()
                         if (id != null && location != null) {
-                            updateCheckOutDetails(id, location, checkOutTime)
+                            updateCheckOutDetails(id, location, check_OutTime)
                         } else {
                             showToast("Failed to get user ID or location")
                         }

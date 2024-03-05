@@ -1,11 +1,26 @@
 <resources>
-    <string name="app_name">ui1</string>
     <string name="select">Select Item</string>
     <string-array name="dropdown_options">
         <item>Select WorkType</item>
         <item>Field Worker</item>
         <item>Corporate Employee</item>
-
-        <!-- Add more options as needed -->
+        <item>MP (Madhya Pradesh)</item>
+        <item>UPW (UP West)</item>
+        <item>UPE (UP East)</item>
+        <item>RJ (Rajasthan)</item>
+        <item>GUJ (Gujarat)</item>
+        <item>MH (Maharashtra)</item>
+        <item>Bihar</item>
+        <item>ROB (Rest of Bengal)</item>
+        <item>KOL (Kolkata)</item>
+        <item>PNB (Punjab)</item>
+        <item>HR (Haryana)</item>
+        <item>AP (Andhra pradesh)</item>
+        <item>KTK (Karnataka)</item>
+        <item>ROTN (Rest of Tamil Nadu)</item>
+        <item>KE (Kerala)</item>
+        <item>MUM (Mumbai)</item>
+        <item>Chennai</item>
+        <item>JH (Jharkhand)</item>
     </string-array>
 </resources>

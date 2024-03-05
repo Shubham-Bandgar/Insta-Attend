@@ -2,8 +2,10 @@ package com.example.myapplication
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -93,18 +95,30 @@ class loginActivity : AppCompatActivity() {
                             if(verify == true){
                                 checkEnrollmentStatus(uid)
                                 showToast("We are logging you in")
+                                val loginProgressBar = findViewById<ProgressBar>(R.id.loginProgressbar)
+                                loginProgressBar.visibility = View.GONE
+
                             }
                             else{
                                 showToast("Please verify your Email")
+                                val loginProgressBar = findViewById<ProgressBar>(R.id.loginProgressbar)
+                                loginProgressBar.visibility = View.GONE
                             }
                         }
                     } else {
                         Toast.makeText(
                             this,
-                            "Login failed: ${task.exception?.message}",
-                            Toast.LENGTH_SHORT
+                            task.exception?.message,
+                            Toast.LENGTH_LONG
                         ).show()
+                        val loginProgressBar = findViewById<ProgressBar>(R.id.loginProgressbar)
+                        loginProgressBar.visibility = View.GONE
                     }
+                }
+                .addOnFailureListener{
+                    showToast(it.toString())
+                    val loginProgressBar = findViewById<ProgressBar>(R.id.loginProgressbar)
+                    loginProgressBar.visibility = View.GONE
                 }
         }
     }
@@ -130,6 +144,8 @@ class loginActivity : AppCompatActivity() {
             override fun onSucceeded(confirmed: Set<AuthenticationResult>) {
                 super.onSucceeded(confirmed)
                 logUser()
+                val loginProgressBar = findViewById<ProgressBar>(R.id.loginProgressbar)
+                loginProgressBar.visibility = View.VISIBLE
             }
 
             override fun onCanceled() {
