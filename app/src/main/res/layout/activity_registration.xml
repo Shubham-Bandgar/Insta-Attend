@@ -76,25 +76,6 @@
 
 
             <EditText
-                android:id="@+id/editTextTextPassword6"
-                android:layout_width="@dimen/_270sdp"
-                android:layout_height="@dimen/_40sdp"
-                android:background="@drawable/edit_text_background"
-                android:drawableLeft="@drawable/baseline_lock_24"
-                android:drawablePadding="40dp"
-                android:drawableTint="@color/app_theme"
-                android:ems="10"
-                android:hint="Confirm Password"
-                android:inputType="textPassword"
-                android:padding="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.484"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.584" />
-
-            <EditText
                 android:id="@+id/editTextText5"
                 android:layout_width="@dimen/_270sdp"
                 android:layout_height="@dimen/_40sdp"
@@ -111,7 +92,7 @@
                 app:layout_constraintHorizontal_bias="0.515"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.025" />
+                app:layout_constraintVertical_bias="0.034" />
 
             <EditText
                 android:id="@+id/editTextTextEmailAddress4"
@@ -126,12 +107,75 @@
                 android:hint="Enter Email"
                 android:inputType="text"
                 android:padding="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/phoneNumberEditText"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.515"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextText5"
+                app:layout_constraintVertical_bias="0.028" />
+
+            <EditText
+                android:id="@+id/editTextTextPassword5"
+                android:layout_width="@dimen/_270sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:background="@drawable/edit_text_background"
+                android:drawableLeft="@drawable/baseline_lock_24"
+                android:drawablePadding="40dp"
+                android:drawableTint="@color/app_theme"
+                android:ems="10"
+                android:hint="Enter Password"
+                android:inputType="textPassword"
+                android:padding="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.515"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/phoneNumberEditText"
+                app:layout_constraintVertical_bias="0.042" />
+
+            <EditText
+                android:id="@+id/editTextTextPassword6"
+                android:layout_width="@dimen/_270sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:background="@drawable/edit_text_background"
+                android:drawableLeft="@drawable/baseline_lock_24"
+                android:drawablePadding="40dp"
+                android:drawableTint="@color/app_theme"
+                android:ems="10"
+                android:hint="Confirm Password"
+                android:inputType="textPassword"
+                android:padding="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.484"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword5"
+                app:layout_constraintVertical_bias="0.051" />
+
+            <Button
+                android:id="@+id/button5"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:backgroundTint="@color/app_theme"
+                android:text="Register"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.85" />
+                app:layout_constraintVertical_bias="0.877" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="@dimen/_200sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:text="Already Registered.. Login Now"
+                android:textAlignment="center"
+                android:textColor="@color/app_theme"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.967" />
 
             <EditText
                 android:id="@+id/phoneNumberEditText"
@@ -149,52 +193,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.484"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.302" />
-
-            <EditText
-                android:id="@+id/editTextTextPassword5"
-                android:layout_width="@dimen/_270sdp"
-                android:layout_height="@dimen/_40sdp"
-                android:background="@drawable/edit_text_background"
-                android:drawableLeft="@drawable/baseline_lock_24"
-                android:drawablePadding="40dp"
-                android:drawableTint="@color/app_theme"
-                android:ems="10"
-                android:hint="Enter Password"
-                android:inputType="textPassword"
-                android:padding="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.484"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.439" />
-
-            <Button
-                android:id="@+id/button5"
-                android:layout_width="@dimen/_100sdp"
-                android:layout_height="@dimen/_40sdp"
-                android:backgroundTint="@color/app_theme"
-                android:text="Register"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.886" />
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="@dimen/_200sdp"
-                android:layout_height="@dimen/_30sdp"
-                android:text="Already Registered.. Login Now"
-                android:textAlignment="center"
-                android:textColor="@color/app_theme"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.987" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress4"
+                app:layout_constraintVertical_bias="0.031" />
 
             <Spinner
                 android:id="@+id/spinner"
@@ -209,10 +209,10 @@
                 android:padding="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.515"
+                app:layout_constraintHorizontal_bias="0.484"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.74" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword6"
+                app:layout_constraintVertical_bias="0.086" />
 
             <TextView
                 android:id="@+id/hintTextView"
@@ -234,6 +234,7 @@
                 android:layout_width="151dp"
                 android:layout_height="63dp"
                 android:visibility="gone"
+
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -26,14 +25,6 @@ class homeActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
-
-        //floating button
-        val floatingActionButton = findViewById<FloatingActionButton>(R.id.backtohome)
-
-        floatingActionButton.setOnClickListener {
-            val intent = Intent(this, loginActivity::class.java)
-            startActivity(intent)
-        }
 
         //logo image
         val imageView=findViewById<ImageView>(R.id.imageView2)
@@ -88,14 +79,13 @@ class homeActivity : AppCompatActivity() {
                 .addOnSuccessListener { document ->
                     if (document != null && document.exists()) {
                         val employeeName = document.getString("username")
-                        val employeeCircle = document.getString("employeeType")
+                        val employeeCircle = document.getString("Circle")
                         employeeNameTextView.text = "Employee Name: $employeeName"
-                        employeeCircleTextView.text = "Circle: $employeeCircle"
-
+                        employeeCircleTextView.text = "Employment: $employeeCircle"
 
                     } else {
                         employeeNameTextView.text = "Employee Name: Not Found"
-                        employeeCircleTextView.text = "Circle: Not Found"
+                        employeeCircleTextView.text = "Employment: Not Found"
                     }
                 }
                 .addOnFailureListener { exception ->

@@ -91,18 +91,18 @@ class DetailActivity : AppCompatActivity() {
                         val employeeName = document.getString("username")
                         val employeeEmail = document.getString("email")
                         val employeePhone = document.getString("phoneNumber")
-                        val employeeCircle = document.getString("employeeType")
+                        val employeeCircle = document.getString("Circle")
                         employeeNameTextView.text = "Employee Name: $employeeName"
                         employeeEmailTextView.text = "Employee Email: $employeeEmail"
                         employeePhoneTextView.text = "Phone No.: $employeePhone"
-                        employeeCircleTextView.text = "Circle: $employeeCircle"
+                        employeeCircleTextView.text = "Employment: $employeeCircle"
 
 
                     } else {
                         employeeNameTextView.text = "Employee Name: Not Found"
                         employeeEmailTextView.text = "Employee Email: Not Found"
                         employeePhoneTextView.text = "Phone No.: Not Found"
-                        employeeCircleTextView.text = "Circle: Not Found"
+                        employeeCircleTextView.text = "Employment: Not Found"
                     }
                 }
                 .addOnFailureListener { exception ->

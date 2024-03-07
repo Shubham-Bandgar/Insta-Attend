@@ -16,6 +16,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.firestore.FirebaseFirestore
 import dev.skomlach.biometric.compat.AuthenticationFailureReason
 import dev.skomlach.biometric.compat.AuthenticationResult
@@ -210,6 +211,21 @@ class registrationActivity : AppCompatActivity() {
                                 showToast(it.toString())
                                 showToast("Invalid Email")
                             }
+                    }
+                    else {
+                        // Handle Firebase authentication errors
+                        val errorMessage = task.exception?.message
+
+                        when (task.exception) {
+                            is FirebaseAuthUserCollisionException -> {
+                                val registerProgressBar = findViewById<ProgressBar>(R.id.registerProgressbar)
+                                registerProgressBar.visibility = View.GONE
+                                showToast("User with this email already exists. Please log in.")
+                            }
+                            else -> {
+                                showToast("Registration failed: $errorMessage")
+                            }
+                        }
                     }
                 }
         } else {

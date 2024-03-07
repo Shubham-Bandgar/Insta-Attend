@@ -111,7 +111,18 @@ class checkOutActivity : AppCompatActivity() {
                             val longitude: Double = location.longitude
                             val locationString : List<Address>? = geoCoder.getFromLocation(latitude, longitude, 1)
                             val add : String = locationString?.get(0)?.getAddressLine(0) ?:""
-                            locationCallback.invoke(add)
+                            if (fencing == true){
+                                if(add.substring(0,8).equals(plusCode)){
+                                    locationCallback.invoke(add)
+                                }
+                                else{
+                                    showToast("You are not in office")
+                                    locationCallback.invoke(null)
+                                }
+                            }
+                            else{
+                                locationCallback.invoke(add)
+                            }
                         } else {
                             showToast("Failed to fetch location")
                             locationCallback.invoke(null)
