@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "953909964234",
-    "project_id": "attendance-management-50dfb",
-    "storage_bucket": "attendance-management-50dfb.appspot.com"
+    "project_number": "990644961746",
+    "project_id": "insta-ams",
+    "storage_bucket": "insta-ams.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:953909964234:android:41be39f5aeb9f60fe53333",
+        "mobilesdk_app_id": "1:990644961746:android:a1d639ea49c32178e7080b",
         "android_client_info": {
-          "package_name": "com.example.myapplication"
+          "package_name": "com.insta.ams"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDGfRZj5Z6Yaf9C9jclpDCpCFVZtO9XDdM"
+          "current_key": "AIzaSyAOvBiixqVszYEmZNv_0mLFCkFtz00OLKI"
         }
       ],
       "services": {
