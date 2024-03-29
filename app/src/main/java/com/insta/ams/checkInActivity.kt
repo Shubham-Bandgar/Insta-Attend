@@ -196,6 +196,7 @@ class checkInActivity : AppCompatActivity() {
                 val attendanceRef = db.collection("attendance")
                     .whereEqualTo("Date", currentDate)
                     .whereEqualTo("Employee Name", employeeName)
+                    .whereEqualTo("CheckIn_Time", "User have not marked attendance for today")
 
                 attendanceRef.get()
                     .addOnSuccessListener { querySnapshot ->
