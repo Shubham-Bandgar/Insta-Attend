@@ -34,8 +34,6 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
-
-/********** Global variables which are accessible by all over the project ******/
 var circleName: String? = null
 var plusCode: String? = null
 var fencing: Boolean? = null
@@ -69,7 +67,7 @@ class checkInActivity : AppCompatActivity() {
 
 
         fetchGeoLocation(authCred.currentUser?.uid){ geoFencing->
-           fencing = geoFencing
+            fencing = geoFencing
         }
 
         locationClient = LocationServices.getFusedLocationProviderClient(this)
@@ -178,12 +176,15 @@ class checkInActivity : AppCompatActivity() {
     ) {
         fetchEmployeeName(uid) { employeeName ->
             if (employeeName != null) {
-                val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-                val currentTime = SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date())
+                val currentDate =
+                    SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+                val currentTime =
+                    SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date())
                 val db = FirebaseFirestore.getInstance()
 
                 val attendanceDetails = hashMapOf(
                     "Employee Name" to employeeName,
+                    "Department" to circleName,
                     "Date" to currentDate,
                     "CheckIn_Time" to currentTime,
                     "Check-In Location" to location,
@@ -193,65 +194,27 @@ class checkInActivity : AppCompatActivity() {
                     "Status" to "Absent",
                 )
 
-                val attendanceRef = db.collection("attendance")
-                    .whereEqualTo("Date", currentDate)
-                    .whereEqualTo("Employee Name", employeeName)
-                    .whereEqualTo("CheckIn_Time", "User have not marked attendance for today")
+                if (activityType == "Check-Out") {
+                    attendanceDetails["Check-Out Time"] = checkOutTime ?: currentTime
+                    attendanceDetails["Check-Out Location"] = checkOutLocation ?: location
+                }
 
-                attendanceRef.get()
-                    .addOnSuccessListener { querySnapshot ->
-                        if (!querySnapshot.isEmpty) {
-                            val document = querySnapshot.documents[0]
-                            val attendanceId = document.id
-                            val updateData = hashMapOf<String, Any?>(
-                                "CheckIn_Time" to currentTime,
-                                "Check-In Location" to location
-                            )
+                db.collection("attendance")
+                    .add(attendanceDetails)
+                    .addOnSuccessListener {
+                        showToast("$activityType successful")
+                        val intent = Intent(this, LoadingActivity::class.java)
+                        startActivity(intent)
+                        finish()
 
-                            if (activityType == "Check-Out") {
-                                updateData["CheckOut_Time"] = checkOutTime ?: currentTime
-                                updateData["Check-Out Location"] = checkOutLocation ?: location
-                            }
-
-                            db.collection("attendance")
-                                .document(attendanceId)
-                                .update(updateData)
-                                .addOnSuccessListener {
-                                    showToast("$activityType updated successfully")
-                                    val intent = Intent(this, LoadingActivity::class.java)
-                                    startActivity(intent)
-                                    finish()
-                                }
-                                .addOnFailureListener {
-                                    showToast("Failed to update $activityType details")
-                                }
-                        } else {
-                            // No existing attendance entry for today, add a new one
-                            addNewAttendance(activityType, attendanceDetails)
-                        }
                     }
                     .addOnFailureListener {
-                        showToast("Failed to check existing attendance")
+                        showToast("Failed to record $activityType details")
                     }
             } else {
                 showToast("Failed to fetch employee name")
             }
         }
-    }
-
-    private fun addNewAttendance(activityType: String, attendanceDetails: HashMap<String, String?>) {
-        val db = FirebaseFirestore.getInstance()
-        db.collection("attendance")
-            .add(attendanceDetails)
-            .addOnSuccessListener {
-                showToast("$activityType successful")
-                val intent = Intent(this, LoadingActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
-            .addOnFailureListener {
-                showToast("Failed to record $activityType details")
-            }
     }
 
     private fun fetchEmployeeName(uid: String?, callback: (String?) -> Unit) {

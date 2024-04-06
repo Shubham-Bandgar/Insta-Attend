@@ -169,11 +169,13 @@ class checkOutActivity : AppCompatActivity() {
         fetchUsername(uid) { username ->
             if (username != null) {
                 val db = FirebaseFirestore.getInstance()
+                val checkoutValues = mutableListOf("", "-")
+                val durationValues = mutableListOf("00:00", "-")
                 db.collection("attendance")
                     .whereEqualTo("Date", currentDate)
                     .whereEqualTo("Employee Name", username)
-                    .whereEqualTo("CheckOut_Time", "")
-                    .whereEqualTo("Duration", "00:00")
+                    .whereIn("CheckOut_Time", checkoutValues)
+                    .whereIn("Duration", durationValues)
                     .get()
                     .addOnSuccessListener { querySnapshot ->
                         for (document in querySnapshot.documents) {

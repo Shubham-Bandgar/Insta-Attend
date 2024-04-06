@@ -33,14 +33,17 @@ class registrationActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
     private lateinit var selectedItem : String
+    private var circleNames = ArrayList<String>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)
 
         val spinner = findViewById<Spinner>(R.id.spinner)
+        spinner.prompt = "Select Circle"
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 selectedItem = parent.getItemAtPosition(position).toString()
+
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 showToast("Please Select your employment type")
@@ -130,10 +133,13 @@ class registrationActivity : AppCompatActivity() {
 
     private fun fetchCircleData() {
         val spinner = findViewById<Spinner>(R.id.spinner)
+        spinner.prompt = "Select Circle" // Set the default prompt
+
         val circleCollection = FirebaseFirestore.getInstance().collection("Circle")
         circleCollection.get()
             .addOnSuccessListener { result ->
-                val circleNames = ArrayList<String>()
+                circleNames.clear()
+                circleNames.add("Select Circle")
 
                 for (document in result) {
                     val circleName = document.id
@@ -148,6 +154,7 @@ class registrationActivity : AppCompatActivity() {
                 showToast("Error fetching Circle data: $exception")
             }
     }
+
 
 
 
@@ -179,12 +186,7 @@ class registrationActivity : AppCompatActivity() {
                                     "phoneNumber" to phoneNumber,
                                     "Circle" to selectedItem,
                                     "isEnrolled" to false,
-                                    if(selectedItem == "Field Employee"){
-                                        "geoFencing" to false
-                                    }
-                                    else{
-                                        "geoFencing" to true
-                                    },
+                                    "geoFencing" to false,
                                     "deletePermission" to null
                                 )
 
