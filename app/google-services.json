@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "990644961746",
-    "project_id": "insta-ams",
-    "storage_bucket": "insta-ams.appspot.com"
+    "project_number": "268482299859",
+    "project_id": "instaict-ams",
+    "storage_bucket": "instaict-ams.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:990644961746:android:a1d639ea49c32178e7080b",
+        "mobilesdk_app_id": "1:268482299859:android:89d482ac5ef2426fb51126",
         "android_client_info": {
           "package_name": "com.insta.ams"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAOvBiixqVszYEmZNv_0mLFCkFtz00OLKI"
+          "current_key": "AIzaSyCIxK_TxDN5OtVphdhQlpiHPASnLzbF46w"
         }
       ],
       "services": {

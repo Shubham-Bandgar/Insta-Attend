@@ -10,9 +10,9 @@
               <option name="connection">
                 <ConnectionSetting>
                   <option name="appId" value="com.insta.ams" />
-                  <option name="mobileSdkAppId" value="1:990644961746:android:a1d639ea49c32178e7080b" />
-                  <option name="projectId" value="insta-ams" />
-                  <option name="projectNumber" value="990644961746" />
+                  <option name="mobileSdkAppId" value="1:268482299859:android:89d482ac5ef2426fb51126" />
+                  <option name="projectId" value="instaict-ams" />
+                  <option name="projectNumber" value="268482299859" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -45,7 +46,10 @@ class AttendanceRecords : AppCompatActivity() {
                         recyclerView.layoutManager = LinearLayoutManager(this)
                         userList = arrayListOf()
                         db = FirebaseFirestore.getInstance()
-                        db.collection("attendance").whereEqualTo("Employee Name", employeeName).get()
+                        db.collection("attendance")
+                            .whereEqualTo("Employee Name", employeeName)
+                            .orderBy("Date", Query.Direction.DESCENDING) // Ordering by Date in descending order
+                            .get()
                             .addOnSuccessListener { result ->
                                 if (!result.isEmpty) {
                                     for (data in result.documents) {
@@ -58,6 +62,7 @@ class AttendanceRecords : AppCompatActivity() {
                                 }
                             }
                             .addOnFailureListener { exception ->
+                                println(exception.toString())
                                 Toast.makeText(this, exception.toString(), Toast.LENGTH_SHORT).show()
                             }
                     } else {
@@ -69,6 +74,7 @@ class AttendanceRecords : AppCompatActivity() {
                 }
         }
     }
+
 
     private fun filterList(query: String?) {
         if (query != null) {

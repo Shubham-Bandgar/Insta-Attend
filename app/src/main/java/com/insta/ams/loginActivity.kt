@@ -10,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.firestore.FirebaseFirestore
 import dev.skomlach.biometric.compat.AuthenticationFailureReason
 import dev.skomlach.biometric.compat.AuthenticationResult
@@ -106,11 +107,23 @@ class loginActivity : AppCompatActivity() {
                             }
                         }
                     } else {
-                        Toast.makeText(
-                            this,
-                            task.exception?.message,
-                            Toast.LENGTH_LONG
-                        ).show()
+                        // Handling FirebaseAuthException
+                        if (task.exception is FirebaseAuthException) {
+                            val authException = task.exception as FirebaseAuthException
+
+                            // Match error codes and display user-friendly messages
+                            when (authException.errorCode) {
+                                "ERROR_INVALID_EMAIL" -> showToast("Invalid email address")
+                                "ERROR_WRONG_PASSWORD" -> showToast("Incorrect password")
+                                "ERROR_USER_NOT_FOUND" -> showToast("User not found")
+                                "ERROR_USER_DISABLED" -> showToast("User account has been disabled")
+                                // Add more error code cases as needed...
+                                else -> showToast("Login failed: ${task.exception?.message}")
+                            }
+                        } else {
+                            // Handle other types of exceptions
+                            showToast("Login failed: ${task.exception?.message}")
+                        }
                         val loginProgressBar = findViewById<ProgressBar>(R.id.loginProgressbar)
                         loginProgressBar.visibility = View.GONE
                     }
@@ -161,6 +174,6 @@ class loginActivity : AppCompatActivity() {
         })
     }
     private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 }

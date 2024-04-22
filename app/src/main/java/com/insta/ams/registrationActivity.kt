@@ -1,5 +1,4 @@
 package com.insta.ams
-
 import CircleAdapter
 import android.content.Intent
 import android.os.Bundle
@@ -16,6 +15,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.firestore.FirebaseFirestore
 import dev.skomlach.biometric.compat.AuthenticationFailureReason
@@ -43,7 +43,6 @@ class registrationActivity : AppCompatActivity() {
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 selectedItem = parent.getItemAtPosition(position).toString()
-
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 showToast("Please Select your employment type")
@@ -172,69 +171,77 @@ class registrationActivity : AppCompatActivity() {
         val confirmPassword = confirmPasswordEditText.text.toString().trim()
         val phoneNumber = phoneNumberEditText.text.toString().trim()
 
-        if (password == confirmPassword) {
-            auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        auth.currentUser?.sendEmailVerification()
-                            ?.addOnSuccessListener {
-                                val user = auth.currentUser
-                                val uid = user?.uid
-                                val employeeDetails = hashMapOf(
-                                    "username" to username,
-                                    "email" to email,
-                                    "phoneNumber" to phoneNumber,
-                                    "Circle" to selectedItem,
-                                    "isEnrolled" to false,
-                                    "geoFencing" to false,
-                                    "deletePermission" to null
-                                )
-
-                                if (uid != null) {
-                                    firestore.collection("employeeDetails")
-                                        .document(uid)
-                                        .set(employeeDetails)
-                                        .addOnSuccessListener {
-                                            val registerProgressBar = findViewById<ProgressBar>(R.id.registerProgressbar)
-                                            registerProgressBar.visibility = View.GONE
-                                            showSuccessDialog()
-                                        }
-                                        .addOnFailureListener { e ->
-                                            Toast.makeText(
-                                                this,
-                                                "Failed to store employee details",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-                                        }
-                                } else {
-                                    showToast(
-                                        "Registration failed: ${task.exception?.message}"
+        if(selectedItem == "Select Circle"){
+            showToast("Please select your department / circle")
+            val registerProgressBar = findViewById<ProgressBar>(R.id.registerProgressbar)
+            registerProgressBar.visibility = View.GONE
+        }
+        else{
+            if (password == confirmPassword) {
+                auth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            auth.currentUser?.sendEmailVerification()
+                                ?.addOnSuccessListener {
+                                    val user = auth.currentUser
+                                    val uid = user?.uid
+                                    val employeeDetails = hashMapOf(
+                                        "username" to username,
+                                        "email" to email,
+                                        "phoneNumber" to phoneNumber,
+                                        "Circle" to selectedItem,
+                                        "isEnrolled" to false,
+                                        "geoFencing" to false,
+                                        "deletePermission" to null
                                     )
-                                }
-                            }
-                            ?.addOnFailureListener {
-                                showToast(it.toString())
-                                showToast("Invalid Email")
-                            }
-                    }
-                    else {
-                        // Handle Firebase authentication errors
-                        val errorMessage = task.exception?.message
 
-                        when (task.exception) {
-                            is FirebaseAuthUserCollisionException -> {
-                                val registerProgressBar = findViewById<ProgressBar>(R.id.registerProgressbar)
-                                registerProgressBar.visibility = View.GONE
-                                showToast("User with this email already exists. Please log in.")
-                            }
-                            else -> {
+                                    if (uid != null) {
+                                        firestore.collection("employeeDetails")
+                                            .document(uid)
+                                            .set(employeeDetails)
+                                            .addOnSuccessListener {
+                                                val registerProgressBar = findViewById<ProgressBar>(R.id.registerProgressbar)
+                                                registerProgressBar.visibility = View.GONE
+                                                showSuccessDialog()
+                                            }
+                                            .addOnFailureListener { e ->
+                                                Toast.makeText(
+                                                    this,
+                                                    "Failed to store employee details",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
+                                    } else {
+                                        showToast(
+                                            "Registration failed: ${task.exception?.message}"
+                                        )
+                                    }
+                                }
+                                ?.addOnFailureListener {
+                                    showToast(it.toString())
+                                    showToast("Invalid Email")
+                                }
+                        }
+                        else {
+                            val registerProgressBar = findViewById<ProgressBar>(R.id.registerProgressbar)
+                            registerProgressBar.visibility = View.GONE
+                            val errorMessage = task.exception?.message
+                            if (task.exception is FirebaseAuthException) {
+                                val authException = task.exception as FirebaseAuthException
+                                when (authException.errorCode) {
+                                    "ERROR_INVALID_EMAIL" -> showToast("Invalid email address")
+                                    "ERROR_WEAK_PASSWORD" -> showToast("Weak password. Password should be at least 6 characters long.")
+                                    "ERROR_EMAIL_ALREADY_IN_USE" -> showToast("Email is already in use. Please use a different email.")
+                                    else -> showToast("Registration failed: $errorMessage")
+                                }
+                            } else {
                                 showToast("Registration failed: $errorMessage")
                             }
                         }
                     }
-                }
-        } else {
-            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -277,13 +284,12 @@ class registrationActivity : AppCompatActivity() {
     }
 
     private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
     private fun isValidPhoneNumber(phoneNumber: String): Boolean {
         // Remove non-digit characters
         val cleanPhoneNumber = phoneNumber.replace("[^\\d]".toRegex(), "")
-
         // Check if the cleaned phone number has exactly 10 digits
         return cleanPhoneNumber.length == 10
     }
