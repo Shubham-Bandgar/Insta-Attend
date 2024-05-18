@@ -13,6 +13,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import org.antlr.runtime.DFA.debug
 
 class AttendanceRecords : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
@@ -62,7 +63,8 @@ class AttendanceRecords : AppCompatActivity() {
                                 }
                             }
                             .addOnFailureListener { exception ->
-                                println(exception.toString())
+                                print(exception.toString())
+
                                 Toast.makeText(this, exception.toString(), Toast.LENGTH_SHORT).show()
                             }
                     } else {

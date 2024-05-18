@@ -9,10 +9,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="com.insta.ams" />
-                  <option name="mobileSdkAppId" value="1:268482299859:android:89d482ac5ef2426fb51126" />
-                  <option name="projectId" value="instaict-ams" />
-                  <option name="projectNumber" value="268482299859" />
+                  <option name="appId" value="com.insta.instaattend" />
+                  <option name="mobileSdkAppId" value="1:1081001803792:android:4fae908a83df28dd194a95" />
+                  <option name="projectId" value="insta-ams-b93e8" />
+                  <option name="projectNumber" value="1081001803792" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

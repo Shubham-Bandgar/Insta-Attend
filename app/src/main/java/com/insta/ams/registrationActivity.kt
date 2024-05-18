@@ -50,7 +50,7 @@ class registrationActivity : AppCompatActivity() {
         }
 
         //Hint for password pattern
-        val editText = findViewById<EditText>(R.id.editTextTextPassword5)
+      /*  val editText = findViewById<EditText>(R.id.editTextTextPassword5)
         val hintTextView = findViewById<TextView>(R.id.hintTextView)
         editText.setOnFocusChangeListener { v, hasFocus ->
             if (hasFocus) {
@@ -61,7 +61,7 @@ class registrationActivity : AppCompatActivity() {
                 hintTextView.visibility = View.GONE
                 }
 
-            }
+            }*/
 
         val floatingActionButton = findViewById<FloatingActionButton>(R.id.backtohome)
 
@@ -92,16 +92,16 @@ class registrationActivity : AppCompatActivity() {
         buttonNavigate.setOnClickListener {
             //validations
             val usernameEditText = findViewById<EditText>(R.id.editTextText5)
-            val emailEditText = findViewById<EditText>(R.id.editTextTextEmailAddress4)
+            //val emailEditText = findViewById<EditText>(R.id.editTextTextEmailAddress4)
             val phoneNumberEditText: EditText = findViewById(R.id.phoneNumberEditText)
             val enteredPhoneNumber: String = phoneNumberEditText.text.toString().trim()
             if(usernameEditText==null){
                 Toast.makeText(this,"Please Enter Your Name",Toast.LENGTH_LONG).show()
             }
 
-            if(emailEditText==null){
+           /* if(emailEditText==null){
                 Toast.makeText(this,"Please Enter Email",Toast.LENGTH_LONG).show()
-            }
+            }*/
 
             // Validate the phone number
             if (isValidPhoneNumber(enteredPhoneNumber)) {
@@ -112,16 +112,16 @@ class registrationActivity : AppCompatActivity() {
             }
 
             //validate password
-            val passwordEditText: EditText = findViewById(R.id.editTextTextPassword5)
+           // val passwordEditText: EditText = findViewById(R.id.editTextTextPassword5)
 
             // Get the entered values
-            val password: String = passwordEditText.text.toString().trim()
+           // val password: String = passwordEditText.text.toString().trim()
 
             // Validate the password
-            if (!isValidPassword(password)) {
+          /*  if (!isValidPassword(password)) {
                 Toast.makeText(this, "Invalid password format.", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
-            }
+            }*/
 
             //bioAuthentication
             startBioAuth()
@@ -160,15 +160,15 @@ class registrationActivity : AppCompatActivity() {
 
     private fun registerUser() {
         val usernameEditText = findViewById<EditText>(R.id.editTextText5)
-        val emailEditText = findViewById<EditText>(R.id.editTextTextEmailAddress4)
-        val passwordEditText = findViewById<EditText>(R.id.editTextTextPassword5)
-        val confirmPasswordEditText = findViewById<EditText>(R.id.editTextTextPassword6)
+       // val emailEditText = findViewById<EditText>(R.id.editTextTextEmailAddress4)
+       // val passwordEditText = findViewById<EditText>(R.id.editTextTextPassword5)
+      //  val confirmPasswordEditText = findViewById<EditText>(R.id.editTextTextPassword6)
         val phoneNumberEditText = findViewById<EditText>(R.id.phoneNumberEditText)
 
         val username = usernameEditText.text.toString().trim()
-        val email = emailEditText.text.toString().trim()
-        val password = passwordEditText.text.toString().trim()
-        val confirmPassword = confirmPasswordEditText.text.toString().trim()
+      //  val email = emailEditText.text.toString().trim()
+       // val password = passwordEditText.text.toString().trim()
+      //  val confirmPassword = confirmPasswordEditText.text.toString().trim()
         val phoneNumber = phoneNumberEditText.text.toString().trim()
 
         if(selectedItem == "Select Circle"){
@@ -177,17 +177,17 @@ class registrationActivity : AppCompatActivity() {
             registerProgressBar.visibility = View.GONE
         }
         else{
-            if (password == confirmPassword) {
-                auth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            auth.currentUser?.sendEmailVerification()
-                                ?.addOnSuccessListener {
+          //  if (password == confirmPassword) {
+            //    auth.createUserWithEmailAndPassword(email, password)
+                 //   .addOnCompleteListener(this) { task ->
+                   //     if (task.isSuccessful) {
+                      //      auth.currentUser?.sendEmailVerification()
+                         //       ?.addOnSuccessListener {
                                     val user = auth.currentUser
                                     val uid = user?.uid
                                     val employeeDetails = hashMapOf(
                                         "username" to username,
-                                        "email" to email,
+                                       // "email" to email,
                                         "phoneNumber" to phoneNumber,
                                         "Circle" to selectedItem,
                                         "isEnrolled" to false,
@@ -212,17 +212,17 @@ class registrationActivity : AppCompatActivity() {
                                                 ).show()
                                             }
                                     } else {
-                                        showToast(
+                                        /*showToast(
                                             "Registration failed: ${task.exception?.message}"
-                                        )
+                                        )*/
                                     }
                                 }
-                                ?.addOnFailureListener {
+                               /* ?.addOnFailureListener {
                                     showToast(it.toString())
                                     showToast("Invalid Email")
-                                }
+                                }*/
                         }
-                        else {
+                        /*else {
                             val registerProgressBar = findViewById<ProgressBar>(R.id.registerProgressbar)
                             registerProgressBar.visibility = View.GONE
                             val errorMessage = task.exception?.message
@@ -243,7 +243,7 @@ class registrationActivity : AppCompatActivity() {
                 Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
             }
         }
-    }
+    }*/
 
     private fun startBioAuth() {
         val faceId = BiometricAuthRequest(
@@ -295,7 +295,7 @@ class registrationActivity : AppCompatActivity() {
     }
 
     // Function to validate password with specific pattern
-    private fun isValidPassword(password: String): Boolean {
+    /*private fun isValidPassword(password: String): Boolean {
         val PASSWORD_PATTERN: Pattern = Pattern.compile(
             "^" +
                     "(?=.*[0-9])" +         // at least 1 digit
@@ -306,12 +306,12 @@ class registrationActivity : AppCompatActivity() {
                     "$"
         )
         return PASSWORD_PATTERN.matcher(password).matches()
-    }
+    }*/
     //showSuccessDialog
     private fun showSuccessDialog(){
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Registration Successful")
-            .setMessage("Please Check Your email for verification link")
+           // .setMessage("Please Check Your email for verification link")
             .setCancelable(true)
             .setPositiveButton("OK") { dialogInterface,it->
                 val intent = Intent(this, loginActivity::class.java)

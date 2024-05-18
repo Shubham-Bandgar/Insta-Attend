@@ -42,17 +42,9 @@ class preLogActivity : AppCompatActivity() {
 
         userDocRef.get().addOnSuccessListener { documentSnapshot ->
             if (documentSnapshot.exists()) {
-                val isEnrolled = documentSnapshot.getBoolean("isEnrolled") ?: false
-
-                if (isEnrolled) {
-                    val intent = Intent(this, homeActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                    startActivity(intent)
-                } else {
-                    val intent = Intent(this, enrollmentActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                }
+                val intent = Intent(this, homeActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(intent)
             } else {
                 showToast("User not found in database")
             }

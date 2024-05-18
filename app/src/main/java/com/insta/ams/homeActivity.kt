@@ -72,7 +72,8 @@ class homeActivity : AppCompatActivity() {
                     if (document != null && document.exists()) {
                         val employeeName = document.getString("username")
                         val employeeCircle = document.getString("Circle")
-                        employeeNameTextView.text = "Employee Name: $employeeName"
+                         employeeNameTextView.text = "Employee Name: $employeeName"
+
                         employeeCircleTextView.text = "Employment: $employeeCircle"
 
                     } else {

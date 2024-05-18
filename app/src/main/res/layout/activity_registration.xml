@@ -71,10 +71,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
-            <!-- ... Other elements remain unchanged ... -->
-
-
             <EditText
                 android:id="@+id/editTextText5"
                 android:layout_width="@dimen/_270sdp"
@@ -95,62 +91,41 @@
                 app:layout_constraintVertical_bias="0.034" />
 
             <EditText
-                android:id="@+id/editTextTextEmailAddress4"
+                android:id="@+id/phoneNumberEditText"
                 android:layout_width="@dimen/_270sdp"
                 android:layout_height="@dimen/_40sdp"
                 android:background="@drawable/edit_text_background"
-
-                android:drawableLeft="@drawable/baseline_email_24"
+                android:drawableLeft="@drawable/baseline_phone_24"
                 android:drawablePadding="40dp"
                 android:drawableTint="@color/app_theme"
                 android:ems="10"
-                android:hint="Enter Email"
-                android:inputType="text"
-                android:padding="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.515"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextText5"
-                app:layout_constraintVertical_bias="0.028" />
-
-            <EditText
-                android:id="@+id/editTextTextPassword5"
-                android:layout_width="@dimen/_270sdp"
-                android:layout_height="@dimen/_40sdp"
-                android:background="@drawable/edit_text_background"
-                android:drawableLeft="@drawable/baseline_lock_24"
-                android:drawablePadding="40dp"
-                android:drawableTint="@color/app_theme"
-                android:ems="10"
-                android:hint="Enter Password"
-                android:inputType="textPassword"
-                android:padding="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.515"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/phoneNumberEditText"
-                app:layout_constraintVertical_bias="0.042" />
-
-            <EditText
-                android:id="@+id/editTextTextPassword6"
-                android:layout_width="@dimen/_270sdp"
-                android:layout_height="@dimen/_40sdp"
-                android:background="@drawable/edit_text_background"
-                android:drawableLeft="@drawable/baseline_lock_24"
-                android:drawablePadding="40dp"
-                android:drawableTint="@color/app_theme"
-                android:ems="10"
-                android:hint="Confirm Password"
-                android:inputType="textPassword"
+                android:hint="Phone Number"
+                android:inputType="phone"
                 android:padding="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.484"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword5"
-                app:layout_constraintVertical_bias="0.051" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextText5"
+                app:layout_constraintVertical_bias="0.031" />
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="@dimen/_270sdp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_background"
+                android:drawableLeft="@drawable/baseline_arrow_drop_down_24"
+                android:drawablePadding="8dp"
+                android:drawableTint="@color/app_theme"
+                android:entries="@array/dropdown_options"
+                android:gravity="center"
+                android:padding="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.484"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/phoneNumberEditText"
+                app:layout_constraintVertical_bias="0.086" />
 
             <Button
                 android:id="@+id/button5"
@@ -177,73 +152,19 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.967" />
 
-            <EditText
-                android:id="@+id/phoneNumberEditText"
-                android:layout_width="@dimen/_270sdp"
-                android:layout_height="@dimen/_40sdp"
-                android:background="@drawable/edit_text_background"
-                android:drawableLeft="@drawable/baseline_phone_24"
-                android:drawablePadding="40dp"
-                android:drawableTint="@color/app_theme"
-                android:ems="10"
-                android:hint="Phone Number"
-                android:inputType="phone"
-                android:padding="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.484"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress4"
-                app:layout_constraintVertical_bias="0.031" />
-
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="@dimen/_270sdp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/edit_text_background"
-                android:drawableLeft="@drawable/baseline_arrow_drop_down_24"
-                android:drawablePadding="8dp"
-                android:drawableTint="@color/app_theme"
-                android:entries="@array/dropdown_options"
-                android:gravity="center"
-                android:padding="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.484"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword6"
-                app:layout_constraintVertical_bias="0.086" />
-
-            <TextView
-                android:id="@+id/hintTextView"
-                android:layout_width="@dimen/_270sdp"
-                android:layout_height="@dimen/_15sdp"
-                android:text="Min 6Char_1Uppercase_1Lowercase_1SpecialSymbol"
-                android:textAlignment="center"
-                android:textColor="@color/material_red_500"
-                android:textSize="10sp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toTopOf="@+id/editTextTextPassword6"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword5" />
-
             <ProgressBar
                 android:id="@+id/registerProgressbar"
                 style="?android:attr/progressBarStyle"
                 android:layout_width="151dp"
                 android:layout_height="63dp"
                 android:visibility="gone"
-
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.416" />
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,11 @@
+
+skotlin:S1172_"5Use "_" instead of this unused lambda parameter "id".(ø×·¢J$5ae5cca8-813b-4eb9-95f3-0f77ad12d7cb
+ukotlin:S1172\"2Use "_" instead of these unused lambda parameters.(ëÄøûÿÿÿÿJ$ce3e312d-16c2-4987-b81b-c6900fae7f86
+rkotlin:S117¼"SRename this local variable to match the regular expression ^`?[_a-z][a-zA-Z0-9]*`?$(şÉÿ•8÷ĞÇ©ğ1
+rkotlin:S117·"SRename this local variable to match the regular expression ^`?[_a-z][a-zA-Z0-9]*`?$(ã£¡û8øĞÇ©ğ1
+pkotlin:S101&"SRename class "checkOutActivity" to match the regular expression ^[A-Z][a-zA-Z0-9]*$(í˜É8ÃÑÇ©ğ1
+†kotlin:S11921"HDefine a constant instead of duplicating this literal "hh:mm a" 3 times.(¡ãªßJ$3d9acbff-8d3d-4ba7-88e2-7e1fc8378497
+fkotlin:S1874z"#Deprecated code should not be used.(Ô†ª½ûÿÿÿÿJ$13c31eb4-6a73-41fc-bbb5-7a50f710f175
+kotlin:S3776h"RRefactor this method to reduce its Cognitive Complexity from 24 to the 15 allowed.(ô¶„éJ$e3ecbf4e-5121-4356-88ad-957e5b97582a
+kotlin:S3776§"RRefactor this method to reduce its Cognitive Complexity from 19 to the 15 allowed.(‚§‡`J$adfd1aea-ef1d-4382-aee9-39cb18dba549
+ikotlin:S6519}"+Replace "equals" with binary operator "==".(¯¯—¯J$8b8b3a01-1aac-483f-9e62-b63664256378

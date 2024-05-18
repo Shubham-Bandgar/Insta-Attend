@@ -1,0 +1,14 @@
+
+Wkotlin:S1172¼"2Use "_" instead of these unused lambda parameters.(¤Ù³‰ıÿÿÿÿ8Â×¯ø1
+Tkotlin:S1172Ï"4Use "_" instead of this unused lambda parameter "e".(‡Â“8Ä×¯ø1
+=kotlin:S125_"Remove this commented out code.(óâÀÏ8Í×¯ø1
+=kotlin:S125f"Remove this commented out code.(Êä”…8Ï×¯ø1
+=kotlin:S125x"Remove this commented out code.(™Ç¶—8Ñ×¯ø1
+>kotlin:S125£"Remove this commented out code.(óâÀÏ8Ò×¯ø1
+>kotlin:S125©"Remove this commented out code.(ÈÖÕî8Ó×¯ø1
+Ckotlin:S125©"Remove this commented out code.(ìÆ½÷úÿÿÿÿ8Ù×¯ø1
+8kotlin:S1128"Remove this unused import.(©Î¨8÷×¯ø1
+9kotlin:S1128"Remove this unused import.(ã°ø„8÷×¯ø1
+>kotlin:S1128"Remove this unused import.(Ó”¾øÿÿÿÿ8÷×¯ø1
+zkotlin:S101"WRename class "registrationActivity" to match the regular expression ^[A-Z][a-zA-Z0-9]*$(ç¿Å“úÿÿÿÿ8ø×¯ø1
+lkotlin:S1192*"NDefine a constant instead of duplicating this literal "Select Circle" 4 times.(‘¥Ã"8ù×¯ø1
